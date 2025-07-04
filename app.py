@@ -1,7 +1,9 @@
+from math import log
 import streamlit as st
 from webCrawler import Crawler
 
 ss = st.session_state
+
 
 col1, col2 = st.columns(2)
 
@@ -15,6 +17,18 @@ with col1:
         if st.button(f"Start {ss.mode} on '{ss.url}'"):
             ss.runner = ss.mode_selector[ss.mode](ss.url)
             ss.runner.crawl()
+
+# Processing URL as status update in st.text_area
+log_area = st.empty()
+if "runner" in ss:
+    for message in ss.runner.crawl():
+        # log_area.text_area("Processing URL", message)
+        log_area.text_area("Processing the following url ⏬⏬ ", message)
+
+
+
+
+
 
 
 
